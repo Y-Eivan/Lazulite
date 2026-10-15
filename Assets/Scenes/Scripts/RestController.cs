@@ -1,9 +1,7 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class RestController : MonoBehaviour
 {
@@ -11,13 +9,6 @@ public class RestController : MonoBehaviour
     [SerializeField] TextAsset restJson;
     VNDialogueUI vnUI;
 
-    TMP_Text titleText;
-    TMP_Text dialogueText;
-    Button dialogueClickArea;
-    RectTransform buttonArea;
-    Button choiceTemplate;
-    GameObject choicePanel;
-    GameObject topBar;
     RestContent content;
     RestChoice selectedChoice;
     int lineIndex;
@@ -37,38 +28,7 @@ public class RestController : MonoBehaviour
             return;
         }
 
-        Transform root = vnCanvas.transform;
-        Transform dialoguePanel = root.Find("DialoguePanel");
-        Transform choiceList = root.Find("ChoicePanel/ChoiceList");
-        Transform dialogueLabel = root.Find("DialoguePanel/DialogueBox/DialogueText");
-        Transform speakerLabel = root.Find("DialoguePanel/DialogueBox/SpeakerTag/SpeakerText");
-        Transform template = root.Find("ChoicePanel/ChoiceList/Choice1");
-        Transform topBarTransform = root.Find("TopBar");
-        if (dialoguePanel == null || choiceList == null || dialogueLabel == null ||
-            speakerLabel == null || template == null || topBarTransform == null)
-        {
-            Debug.LogError("RestScene's VN canvas is missing a dialogue or choice object.");
-            return;
-        }
-
-        dialogueClickArea = dialoguePanel.GetComponent<Button>();
-        dialogueText = dialogueLabel.GetComponent<TMP_Text>();
-        titleText = speakerLabel.GetComponent<TMP_Text>();
-        buttonArea = choiceList.GetComponent<RectTransform>();
-        choiceTemplate = template.GetComponent<Button>();
-        choicePanel = choiceList.parent.gameObject;
-        topBar = topBarTransform.gameObject;
-        if (dialogueClickArea == null || dialogueText == null || titleText == null ||
-            buttonArea == null || choiceTemplate == null)
-        {
-            Debug.LogError("RestScene's VN canvas is missing a required UI component.");
-            return;
-        }
-
-        Transform portrait = root.Find("DialoguePanel/Portrait");
-        if (portrait != null) portrait.gameObject.SetActive(false);
-        choiceTemplate.gameObject.SetActive(false);
-        titleText.text = "Rest";
+        vnUI.speakerText.text = "Rest";
 
         if (!TryLoadContent())
         {
@@ -128,7 +88,7 @@ public class RestController : MonoBehaviour
         // Party HP is not implemented yet, so no recovery or gold cost is applied here.
         selectedChoice = choice;
         lineIndex = 0;
-        titleText.text = choice.label;
+        vnUI.speakerText.text = choice.label;
         ShowResultLine();
     }
 
@@ -149,16 +109,6 @@ public class RestController : MonoBehaviour
     void ShowDialogue(string text, UnityAction next)
     {
         vnUI.ShowDialogue(text, next);
-    }
-
-    void ClearButtons()
-    {
-        foreach (Transform child in buttonArea)
-        {
-            if (child == choiceTemplate.transform) continue;
-            child.gameObject.SetActive(false);
-            Destroy(child.gameObject);
-        }
     }
 
     void AddButton(string label, UnityAction action)

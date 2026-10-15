@@ -13,6 +13,11 @@ public class VNDialogueUI : MonoBehaviour
     public Button choiceTemplate;
     public GameObject topBar;
 
+    void Awake()
+    {
+        choiceTemplate.gameObject.SetActive(false);
+    }
+
     public void ShowDialogue(string text, UnityAction next)
     {
         choicePanel.SetActive(false);

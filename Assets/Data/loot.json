@@ -1,0 +1,32 @@
+{
+    "introLines": [
+        "You discover a collection of rewards."
+    ],
+    "prompt": "Choose one reward.",
+    "choices": [
+        {
+            "label": "Take 20 Gold",
+            "kind": "gold",
+            "goldAmount": 20,
+            "resultLines": [
+                "You collect 20 gold."
+            ]
+        },
+        {
+            "label": "Artifact (Placeholder)",
+            "kind": "placeholder",
+            "goldAmount": 0,
+            "resultLines": [
+                "Artifact rewards are waiting for item data. No item was added."
+            ]
+        },
+        {
+            "label": "Hero (Placeholder)",
+            "kind": "placeholder",
+            "goldAmount": 0,
+            "resultLines": [
+                "Hero rewards are waiting for character data. No hero was added."
+            ]
+        }
+    ]
+}

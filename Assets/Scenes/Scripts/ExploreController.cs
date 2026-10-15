@@ -1,23 +1,13 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ExploreController : MonoBehaviour
 {
     [SerializeField] TextAsset encountersJson;
     [SerializeField] VNDialogueUI vnUI;
-    [SerializeField] TMP_Text encounterText;
-
-    [SerializeField] TMP_Text titleText;
-    [SerializeField] RectTransform buttonArea;
-    [SerializeField] Button choiceTemplate;
-    [SerializeField] GameObject topBar;
-    Button dialogueClickArea;
-    GameObject choicePanel;
     EncounterData selected;
     EncounterResult currentResult;
     string rewardSummary;
@@ -25,16 +15,11 @@ public class ExploreController : MonoBehaviour
 
     void Start()
     {
-        dialogueClickArea = encounterText != null ? encounterText.GetComponentInParent<Button>(true) : null;
-        choicePanel = buttonArea != null && buttonArea.parent != null ? buttonArea.parent.gameObject : null;
-        if (encounterText == null || titleText == null || buttonArea == null || choiceTemplate == null ||
-            topBar == null || dialogueClickArea == null || choicePanel == null)
+        if (vnUI == null)
         {
-            Debug.LogError("ExploreScene is missing a VN canvas reference or the DialoguePanel Button.");
+            Debug.LogError("ExploreScene needs a VNDialogueUI reference.");
             return;
         }
-
-        choiceTemplate.gameObject.SetActive(false);
 
         if (!EncounterCatalog.TryLoad(encountersJson, out EncounterData[] encounters, out string error))
         {
@@ -44,7 +29,7 @@ public class ExploreController : MonoBehaviour
         }
 
         selected = ChooseWeighted(encounters);
-        titleText.text = selected.displayName;
+        vnUI.speakerText.text = selected.displayName;
         lineIndex = 0;
         ShowIntroLine();
     }
@@ -76,8 +61,7 @@ public class ExploreController : MonoBehaviour
 
     void ShowChoices()
     {
-        ShowChoiceButtons();
-        encounterText.text = "What will you do?";
+        vnUI.BeginChoices("What will you do?");
         foreach (EncounterChoice choice in selected.choices)
         {
             EncounterChoice currentChoice = choice;
@@ -98,8 +82,7 @@ public class ExploreController : MonoBehaviour
 
     void ShowPuzzle(EncounterPuzzle puzzle)
     {
-        ShowChoiceButtons();
-        encounterText.text = puzzle.prompt;
+        vnUI.BeginChoices(puzzle.prompt);
         for (int i = 0; i < puzzle.options.Length; i++)
         {
             int optionIndex = i;
@@ -166,7 +149,7 @@ public class ExploreController : MonoBehaviour
 
     void ShowError(string error)
     {
-        titleText.text = "Explore";
+        vnUI.speakerText.text = "Explore";
         ShowDialogue("Encounter data error:\n" + error,
             () => SceneManager.LoadScene("ExplorationScene"));
     }
@@ -174,21 +157,6 @@ public class ExploreController : MonoBehaviour
     void ShowDialogue(string text, UnityAction next)
     {
         vnUI.ShowDialogue(text, next);
-    }
-
-    void ShowChoiceButtons()
-    {
-        vnUI.BeginChoices("");
-    }
-
-    void ClearButtons()
-    {
-        foreach (Transform child in buttonArea)
-        {
-            if (child == choiceTemplate.transform) continue;
-            child.gameObject.SetActive(false);
-            Destroy(child.gameObject);
-        }
     }
 
     void AddButton(string label, UnityAction action)
