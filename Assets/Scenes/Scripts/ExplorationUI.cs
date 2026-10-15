@@ -65,18 +65,19 @@ public class ExplorationUI : MonoBehaviour
 
         int numberOfChoices = Random.Range(2, 4);
 
-        EncounterFile file = JsonUtility.FromJson<EncounterFile>(encountersJson.text);
         string exploreLabel = "Explore";
-
-        HashSet<string> shown = new();
-
-        foreach (EncounterData encounter in file.encounters)
+        if (EncounterCatalog.TryLoad(encountersJson, out EncounterData[] encounters, out string error))
         {
-            if (shown.Count == 3) break;
-
-            if (shown.Add(encounter.type))
-                exploreLabel += "\nPossible: " + encounter.type;
+            HashSet<string> shown = new();
+            List<string> types = new();
+            foreach (EncounterData encounter in encounters)
+            {
+                if (types.Count == 3) break;
+                if (shown.Add(encounter.type)) types.Add(encounter.type);
+            }
+            exploreLabel += "\nPossible: " + string.Join(", ", types);
         }
+        else Debug.LogError(error);
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             if (i >= numberOfChoices)

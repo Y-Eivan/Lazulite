@@ -1,0 +1,40 @@
+{
+    "introLines": [
+        "The party finds a quiet place to rest.",
+        "How would you like to recover?"
+    ],
+    "choices": [
+        {
+            "id": "standard_rest",
+            "label": "Standard Rest",
+            "recoveryType": "PERCENT_MAX_HP",
+            "recoveryValue": 0.3,
+            "costGold": 0,
+            "resultLines": [
+                "The party takes a quiet rest.",
+                "HP recovery will be connected when party health is available."
+            ]
+        },
+        {
+            "id": "premium_rest",
+            "label": "Premium Rest (30 Gold)",
+            "recoveryType": "FLAT_HP",
+            "recoveryValue": 60,
+            "costGold": 30,
+            "resultLines": [
+                "Premium rest is waiting for the party health system.",
+                "No gold was spent."
+            ]
+        },
+        {
+            "id": "leave",
+            "label": "Leave",
+            "recoveryType": "NONE",
+            "recoveryValue": 0,
+            "costGold": 0,
+            "resultLines": [
+                "The party continues on its way."
+            ]
+        }
+    ]
+}

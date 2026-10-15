@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 185984935}
   - component: {fileID: 185984934}
   - component: {fileID: 185984933}
+  - component: {fileID: 2000000003}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -375,7 +376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1317713791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +676,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483750502}
   m_CullTransparentMesh: 1
+--- !u!1001 &2000000001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4872380876250670064, guid: 3eb14964ec021694c8693381180900c4, type: 3}
+      propertyPath: m_Name
+      value: VNRestCanvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3eb14964ec021694c8693381180900c4, type: 3}
+--- !u!1 &2000000002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4872380876250670064, guid: 3eb14964ec021694c8693381180900c4, type: 3}
+  m_PrefabInstance: {fileID: 2000000001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185984932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fce6592d8844ac8980bb7c9948f4d4a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RestController
+  vnCanvas: {fileID: 2000000002}
+  restJson: {fileID: 4900000, guid: 0aefcbb1c3fa4cbeb829cadc53e87081, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -682,3 +719,4 @@ SceneRoots:
   - {fileID: 185984935}
   - {fileID: 1317713794}
   - {fileID: 1469394793}
+  - {fileID: 2000000001}

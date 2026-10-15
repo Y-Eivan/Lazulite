@@ -1,3 +1,65 @@
 {
-    "encounters": []
+    "encounters": [
+        {
+            "id": "sealed_cache_example",
+            "type": "Treasure",
+            "displayName": "Sealed Cache",
+            "hint": "A locked cache may hold a reward.",
+            "weight": 1,
+            "introLines": [
+                "A small cache rests beside the path.",
+                "A three-symbol lock keeps its lid shut."
+            ],
+            "choices": [
+                {
+                    "id": "try_lock",
+                    "label": "Try the lock",
+                    "kind": "puzzle",
+                    "puzzle": {
+                        "prompt": "The inscription reads: Which symbol follows the sun at night?",
+                        "options": ["Moon", "Flame", "Leaf"],
+                        "correctOptionIndex": 0,
+                        "successResult": {
+                            "lines": ["The lock clicks open. You find coins and an artifact inside."],
+                            "goldDelta": 20,
+                            "itemIds": ["ARTIFACT_ID_TBD"]
+                        },
+                        "failureResult": {
+                            "lines": ["The lock stays shut. You leave the cache behind."],
+                            "goldDelta": 0,
+                            "itemIds": []
+                        }
+                    }
+                },
+                {
+                    "id": "force_lock",
+                    "label": "Force it open",
+                    "kind": "chance",
+                    "chance": {
+                        "successRate": 0.7,
+                        "successResult": {
+                            "lines": ["The lock gives way. You find a few coins."],
+                            "goldDelta": 10,
+                            "itemIds": []
+                        },
+                        "failureResult": {
+                            "lines": ["The lock jams. You leave the cache behind."],
+                            "goldDelta": 0,
+                            "itemIds": []
+                        }
+                    }
+                },
+                {
+                    "id": "leave_cache",
+                    "label": "Leave it alone",
+                    "kind": "result",
+                    "result": {
+                        "lines": ["You continue down the path."],
+                        "goldDelta": 0,
+                        "itemIds": []
+                    }
+                }
+            ]
+        }
+    ]
 }
